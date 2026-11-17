@@ -66,14 +66,9 @@ Kite reads and replies in that browser, one run at a time. To sign out:
 ## Install
 
 **One click:** open [lemma.work/import/github/wineforyourplate/twitter-engagement](https://lemma.work/import/github/wineforyourplate/twitter-engagement),
-pick an organisation, and Lemma makes the pod from this repository: tables, functions, Kite, the
-workflow, the clock template and the app. Then publish Kite's notes once (they live in a system folder an
-import can't write) and you're done:
-
-```bash
-git clone https://github.com/wineforyourplate/twitter-engagement.git && cd twitter-engagement
-bash scripts/bootstrap.sh --server <server> --org <org-id> --pod <pod-id>
-```
+pick an organisation, and Lemma makes the whole pod from this repository: the tables, the functions,
+Kite and its notes (`files/skills` lands in `/skills`), the workflow, the clock template, and the app,
+built and deployed. Then open the `x-teammate` app and go through the onboarding. Nothing else to run.
 
 **From the command line:** you need the Lemma CLI (logged in), `python3`, and Node.js 20+ with npm. Pass `--server`, `--org` and
 `--pod` on every call if you use more than one Lemma server.
