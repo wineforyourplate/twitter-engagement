@@ -1,0 +1,264 @@
+@import 'tailwindcss';
+
+/* X Teammate: Liquid Glass over a lit sky. Kite's blue and coral are the light
+   behind the glass; ink is near-black like X. See DESIGN.md. */
+
+@theme {
+  --color-sky: #f2f4fa;
+  --color-ink: #12141c;
+  --color-ink-2: #474c5e;
+  --color-ink-3: #868b9e;
+  --color-line: rgb(18 20 28 / 0.08);
+  --color-blue: #426cf5;
+  --color-blue-ink: #2346c4;
+  --color-blue-tint: #e3e9ff;
+  --color-coral: #fc707e;
+  --color-coral-ink: #b8283c;
+  --color-coral-tint: #ffe3e6;
+  --color-mint: #2fae7f;
+  --color-mint-ink: #17694a;
+  --color-mint-tint: #dcf5ea;
+  --color-amber: #f0a23a;
+  --color-amber-ink: #8a5300;
+  --color-amber-tint: #fff0d9;
+
+  --font-sans: 'Geist', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-serif: 'Instrument Serif', Georgia, serif;
+  --font-weight-bold: 620;
+  --font-weight-semibold: 560;
+  --font-weight-medium: 480;
+}
+
+@layer base {
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--color-sky);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 15.5px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  :focus-visible { outline: 2.5px solid var(--color-blue); outline-offset: 2px; border-radius: 12px; }
+  button { cursor: pointer; font: inherit; color: inherit; }
+  input, textarea, select { font: inherit; color: inherit; }
+  ::selection { background: var(--color-blue-tint); }
+}
+
+.font-serif { font-family: var(--font-serif); font-weight: 400; letter-spacing: -0.01em; }
+.tnum { font-variant-numeric: tabular-nums; }
+
+@layer components {
+/* ---- 1 · the light behind the glass ------------------------------------------ */
+.sky::before {
+  content: '';
+  position: fixed;
+  inset: -12%;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(46% 40% at 4% 6%, rgb(120 150 255 / 0.95), transparent 70%),
+    radial-gradient(42% 38% at 98% 6%, rgb(255 145 160 / 0.85), transparent 70%),
+    radial-gradient(38% 34% at 62% 38%, rgb(160 190 255 / 0.55), transparent 72%),
+    radial-gradient(48% 42% at 0% 80%, rgb(196 176 255 / 0.9), transparent 70%),
+    radial-gradient(44% 40% at 100% 94%, rgb(255 200 160 / 0.85), transparent 70%),
+    radial-gradient(30% 26% at 30% 55%, rgb(255 190 205 / 0.4), transparent 72%);
+  filter: blur(10px);
+  animation: drift 40s ease-in-out infinite alternate;
+}
+@keyframes drift { to { transform: translate3d(-2%, 1.5%, 0) scale(1.04); } }
+
+/* ---- 2 · glass ---------------------------------------------------------------- */
+.glass {
+  position: relative;
+  background: rgb(255 255 255 / 0.56);
+  -webkit-backdrop-filter: blur(24px) saturate(175%);
+  backdrop-filter: blur(24px) saturate(175%);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.95),
+    inset 0 0 0 1px rgb(255 255 255 / 0.5),
+    0 18px 40px -22px rgb(20 24 60 / 0.38),
+    0 2px 6px rgb(20 24 60 / 0.05);
+  border-radius: 28px;
+}
+/* the liquid rim: a hairline that catches light top-left and bottom-right */
+.glass::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.25px;
+  pointer-events: none;
+  background: linear-gradient(140deg, rgb(255 255 255 / 0.95) 0%, rgb(255 255 255 / 0.15) 26%, transparent 45%, transparent 62%, rgb(255 255 255 / 0.25) 82%, rgb(255 255 255 / 0.8) 100%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+.glass-strong { background: rgb(255 255 255 / 0.8); }
+.glass-soft { background: rgb(255 255 255 / 0.38); }
+
+/* inset well inside glass: the post you're replying to */
+.well {
+  background: rgb(18 20 40 / 0.04);
+  box-shadow: inset 0 1px 2px rgb(18 20 40 / 0.06);
+  border-radius: 18px;
+}
+
+/* the reply: a bubble of clearer glass */
+.bubble {
+  background: rgb(255 255 255 / 0.82);
+  box-shadow: inset 0 1px 0 #fff, 0 6px 18px -10px rgb(20 24 60 / 0.3), 0 0 0 1px rgb(66 108 245 / 0.12);
+  border-radius: 20px 20px 20px 8px;
+}
+
+/* ---- 3 · buttons ---------------------------------------------------------------- */
+.press { transition: transform 160ms cubic-bezier(0.3, 0.7, 0.4, 1), background 160ms, box-shadow 160ms; -webkit-tap-highlight-color: transparent; }
+.press:active { transform: scale(0.97); }
+
+/* smoked ink glass: the one primary action */
+.btn-ink {
+  position: relative;
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  min-height: 44px; padding: 0 20px; border: 0; border-radius: 999px;
+  color: #fff; font-weight: var(--font-weight-semibold);
+  background: linear-gradient(180deg, #2b2f3d 0%, #161925 60%, #10121b 100%);
+  box-shadow: inset 0 1px 0.5px rgb(255 255 255 / 0.45), inset 0 -1px 1px rgb(255 255 255 / 0.08), 0 10px 20px -10px rgb(16 18 27 / 0.75), 0 1px 2px rgb(16 18 27 / 0.3);
+  isolation: isolate;
+}
+.btn-ink::before {
+  content: '';
+  position: absolute; inset: 0; border-radius: inherit; padding: 1.25px; pointer-events: none;
+  background: linear-gradient(150deg, rgb(255 255 255 / 0.85) 0%, rgb(255 255 255 / 0.18) 24%, transparent 45%, transparent 62%, rgb(150 170 255 / 0.35) 82%, rgb(255 255 255 / 0.5) 100%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+}
+.btn-ink:hover:not(:disabled) { background: linear-gradient(180deg, #353a4b 0%, #1d2130 60%, #151824 100%); }
+.btn-ink:disabled { opacity: 0.4; cursor: default; }
+
+/* clear glass: secondary */
+.btn-glass {
+  display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+  min-height: 44px; padding: 0 16px; border: 0; border-radius: 999px;
+  color: var(--color-ink); font-weight: var(--font-weight-medium);
+  background: rgb(255 255 255 / 0.6);
+  -webkit-backdrop-filter: blur(14px) saturate(160%); backdrop-filter: blur(14px) saturate(160%);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.95), inset 0 0 0 1px rgb(18 20 40 / 0.06), 0 6px 16px -10px rgb(20 24 60 / 0.35);
+}
+.btn-glass:hover:not(:disabled) { background: rgb(255 255 255 / 0.85); }
+.btn-glass:disabled { opacity: 0.45; cursor: default; }
+.btn-quiet {
+  display: inline-flex; align-items: center; gap: 6px; min-height: 40px; padding: 0 12px; border: 0;
+  border-radius: 999px; background: transparent; color: var(--color-ink-2); font-weight: var(--font-weight-medium);
+}
+.btn-quiet:hover { background: rgb(18 20 40 / 0.05); color: var(--color-ink); }
+
+/* small labels */
+.chip {
+  display: inline-flex; align-items: center; gap: 5px; height: 24px; padding: 0 9px; border-radius: 999px;
+  font-size: 12.5px; font-weight: var(--font-weight-semibold); white-space: nowrap;
+  background: rgb(18 20 40 / 0.06); color: var(--color-ink-2);
+}
+.chip-blue { background: var(--color-blue-tint); color: var(--color-blue-ink); }
+.chip-coral { background: var(--color-coral-tint); color: var(--color-coral-ink); }
+.chip-mint { background: var(--color-mint-tint); color: var(--color-mint-ink); }
+.chip-amber { background: var(--color-amber-tint); color: var(--color-amber-ink); }
+
+/* ---- 4 · the switch (a liquid bead in a glass track) --------------------------- */
+.lswitch {
+  position: relative; flex: none; width: 64px; height: 36px; border-radius: 999px; border: 0; padding: 0;
+  background: rgb(18 20 40 / 0.1);
+  box-shadow: inset 0 1px 3px rgb(18 20 40 / 0.18), inset 0 0 0 1px rgb(18 20 40 / 0.05);
+  transition: background 260ms;
+}
+.lswitch[aria-checked='true'] {
+  background: linear-gradient(135deg, #5b82ff, #3a5ee8 55%, #fc707e 140%);
+  box-shadow: inset 0 1px 3px rgb(10 20 80 / 0.35), 0 6px 16px -8px rgb(66 108 245 / 0.8);
+}
+.lswitch::after {
+  content: '';
+  position: absolute; top: 3px; left: 3px; width: 30px; height: 30px; border-radius: 999px;
+  background: radial-gradient(70% 60% at 35% 25%, #fff 0%, rgb(255 255 255 / 0.92) 45%, rgb(230 236 250 / 0.9) 100%);
+  box-shadow: inset 0 -2px 4px rgb(18 20 40 / 0.12), 0 3px 8px rgb(18 20 40 / 0.28);
+  transition: transform 380ms cubic-bezier(0.34, 1.45, 0.5, 1), width 200ms;
+}
+.lswitch:active::after { width: 38px; }
+.lswitch[aria-checked='true']::after { transform: translateX(28px); }
+.lswitch[aria-checked='true']:active::after { transform: translateX(20px); }
+.lswitch:disabled { opacity: 0.45; cursor: not-allowed; }
+
+/* ---- 5 · the floating nav pill ------------------------------------------------- */
+.dock {
+  position: relative; display: flex; gap: 2px; padding: 6px; border-radius: 999px;
+  background: rgb(255 255 255 / 0.5);
+  -webkit-backdrop-filter: blur(26px) saturate(180%); backdrop-filter: blur(26px) saturate(180%);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.95), inset 0 0 0 1px rgb(255 255 255 / 0.5), 0 20px 40px -18px rgb(20 24 60 / 0.5), 0 2px 8px rgb(20 24 60 / 0.08);
+}
+.dock-lens {
+  position: absolute; top: 6px; bottom: 6px; border-radius: 999px; pointer-events: none;
+  background: radial-gradient(120% 90% at 50% 0%, rgb(255 255 255 / 0.98), rgb(255 255 255 / 0.75) 60%, rgb(235 240 255 / 0.8));
+  box-shadow: inset 0 -1px 2px rgb(18 20 40 / 0.08), 0 6px 14px -6px rgb(20 24 60 / 0.4), 0 0 0 1px rgb(255 255 255 / 0.8);
+  transition: left 420ms cubic-bezier(0.34, 1.3, 0.5, 1), width 420ms cubic-bezier(0.34, 1.3, 0.5, 1);
+}
+.dock button {
+  position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px;
+  min-width: 54px; height: 52px; padding: 0 10px; border: 0; border-radius: 999px; background: transparent;
+  font-size: 11.5px; font-weight: var(--font-weight-semibold); color: var(--color-ink-3);
+}
+.dock button[aria-current='page'] { color: var(--color-ink); }
+.dock button[aria-current='page'] svg { color: var(--color-blue); }
+.dock .dot { position: absolute; top: 9px; right: 17px; width: 8px; height: 8px; border-radius: 99px; background: var(--color-coral); box-shadow: 0 0 0 2px #fff; }
+@media (min-width: 640px) { .dock button { min-width: 74px; font-size: 12px; } }
+@media (max-width: 380px) { .dock button { padding: 0 6px; font-size: 11px; } }
+
+/* ---- 6 · Kite ------------------------------------------------------------------ */
+.kite { position: relative; flex: none; }
+.kite img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 10px 14px rgb(66 108 245 / 0.28)); }
+.kite .eye { position: absolute; width: 9%; aspect-ratio: 1; border-radius: 50%; background: #fff; transform: translate(-50%, -50%); box-shadow: 0 1px 1px rgb(0 0 0 / 0.15); animation: blink 5.2s infinite; }
+.kite .eye::after { content: ''; position: absolute; left: 30%; top: 26%; width: 50%; height: 56%; border-radius: 50%; background: #12141c; }
+.kite-bob { animation: bob 3.6s ease-in-out infinite; }
+.kite-busy { animation: busy 1.4s ease-in-out infinite; }
+@keyframes blink { 0%, 94%, 100% { transform: translate(-50%, -50%) scaleY(1); } 96% { transform: translate(-50%, -50%) scaleY(0.1); } }
+@keyframes bob { 0%, 100% { transform: translateY(0) rotate(-3deg); } 50% { transform: translateY(-5px) rotate(3deg); } }
+@keyframes busy { 0%, 100% { transform: translateY(0) rotate(-6deg); } 50% { transform: translateY(-7px) rotate(7deg); } }
+
+/* ---- motion -------------------------------------------------------------------- */
+@keyframes rise { from { opacity: 0; transform: translateY(10px) scale(0.985); } to { opacity: 1; transform: none; } }
+.rise { animation: rise 420ms cubic-bezier(0.3, 0.7, 0.4, 1) both; }
+@keyframes pulse-dot { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
+.live-dot { animation: pulse-dot 1.8s ease-in-out infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes ring-sheen { to { transform: rotate(360deg); } }
+
+.no-bar { scrollbar-width: none; }
+.no-bar::-webkit-scrollbar { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 1ms !important; animation-iteration-count: 1 !important; transition-duration: 1ms !important; }
+}
+
+/* ---- the daily summary, as a document ------------------------------------------ */
+.doc { font-size: 15.5px; line-height: 1.65; }
+.doc h2 { font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-ink-3); font-weight: var(--font-weight-semibold); margin: 1.4em 0 0.4em; }
+.doc h2:first-child { margin-top: 0; }
+.doc ul, .doc ol { padding-left: 1.25em; margin: 0.3em 0; }
+.doc ul { list-style: disc; } .doc ol { list-style: decimal; }
+.doc li { margin: 0.25em 0; }
+.doc li::marker { color: var(--color-ink-3); }
+.doc strong { font-weight: var(--font-weight-semibold); }
+.doc p { margin: 0.4em 0; }
+
+/* range slider in glass */
+input[type='range'].lrange { -webkit-appearance: none; appearance: none; width: 100%; height: 8px; border-radius: 99px; background: linear-gradient(90deg, var(--color-blue) var(--p, 50%), rgb(18 20 40 / 0.1) var(--p, 50%)); }
+input[type='range'].lrange::-webkit-slider-thumb { -webkit-appearance: none; width: 26px; height: 26px; border-radius: 99px; background: radial-gradient(70% 60% at 35% 25%, #fff, #e8edf9); box-shadow: 0 3px 8px rgb(18 20 40 / 0.3), inset 0 -2px 3px rgb(18 20 40 / 0.1); }
+input[type='range'].lrange::-moz-range-thumb { width: 26px; height: 26px; border: 0; border-radius: 99px; background: #fff; box-shadow: 0 3px 8px rgb(18 20 40 / 0.3); }
+
+.field {
+  width: 100%; border: 0; border-radius: 16px; padding: 12px 14px; background: rgb(255 255 255 / 0.75);
+  box-shadow: inset 0 1px 2px rgb(18 20 40 / 0.08), 0 0 0 1px rgb(18 20 40 / 0.06);
+  outline: none; transition: box-shadow 160ms;
+}
+.field:focus { box-shadow: inset 0 1px 2px rgb(18 20 40 / 0.08), 0 0 0 2px var(--color-blue); }
+.field::placeholder { color: var(--color-ink-3); }
+
+}

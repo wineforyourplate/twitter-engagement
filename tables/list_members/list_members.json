@@ -1,0 +1,69 @@
+// Who is on each list, and who Kite suggests adding or dropping.
+{
+  "name": "list_members",
+  "primary_key_column": "id",
+  "enable_rls": true,
+  "visibility": "POD",
+  "columns": [
+    {
+      "name": "handle",
+      "type": "TEXT",
+      "max_length": 60,
+      "required": true
+    },
+    {
+      "name": "name",
+      "type": "TEXT",
+      "max_length": 120
+    },
+    {
+      "name": "list_id",
+      "type": "TEXT",
+      "max_length": 60,
+      "required": true,
+      "description": "The lists row id"
+    },
+    {
+      "name": "status",
+      "type": "ENUM",
+      "options": [
+        "member",
+        "suggested",
+        "drop_suggested",
+        "removed"
+      ],
+      "description": "suggested: Kite proposes adding them. drop_suggested: Kite proposes removing them (silent 3 weeks, or never reached). Nobody is added or removed without them.",
+      "default": "member"
+    },
+    {
+      "name": "why",
+      "type": "TEXT",
+      "max_length": 300,
+      "description": "Why they're on it, or why Kite suggests it"
+    },
+    {
+      "name": "followers",
+      "type": "INTEGER"
+    },
+    {
+      "name": "bio",
+      "type": "TEXT",
+      "max_length": 400
+    },
+    {
+      "name": "on_x",
+      "type": "BOOLEAN",
+      "default": false,
+      "description": "Kite has added them to the X List itself"
+    },
+    {
+      "name": "signals",
+      "type": "JSON",
+      "description": "{replied_to_us, our_replies, best_views, last_engaged_at, last_post_at, posts_week}"
+    },
+    {
+      "name": "added_at",
+      "type": "DATETIME"
+    }
+  ]
+}

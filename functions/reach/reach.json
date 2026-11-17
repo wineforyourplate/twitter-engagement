@@ -1,0 +1,30 @@
+{
+  "name": "reach",
+  "description": "The reach check's verdict: if 10+ replies since the last resume all sit at 5 views or fewer, stop X and say why. Also records a stop Kite saw on X (a warning page, a failed reply).",
+  "type": "API",
+  "visibility": "POD",
+  "code": {
+    "$file": "code.py"
+  },
+  "permissions": {
+    "grants": [
+      {
+        "resource_type": "datastore_table",
+        "resource_name": "profile",
+        "permission_ids": [
+          "datastore.table.read",
+          "datastore.record.read",
+          "datastore.record.write"
+        ]
+      },
+      {
+        "resource_type": "datastore_table",
+        "resource_name": "replies",
+        "permission_ids": [
+          "datastore.table.read",
+          "datastore.record.read"
+        ]
+      }
+    ]
+  }
+}

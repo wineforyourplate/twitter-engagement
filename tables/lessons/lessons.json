@@ -1,0 +1,45 @@
+// What their edits and words taught Kite. Locked ones are theirs; Kite never changes them.
+{
+  "name": "lessons",
+  "primary_key_column": "id",
+  "enable_rls": true,
+  "visibility": "POD",
+  "columns": [
+    {
+      "name": "rule",
+      "type": "TEXT",
+      "max_length": 300,
+      "required": true
+    },
+    {
+      "name": "applies_to",
+      "type": "TEXT",
+      "max_length": 200
+    },
+    {
+      "name": "why",
+      "type": "TEXT",
+      "max_length": 400
+    },
+    {
+      "name": "example",
+      "type": "TEXT",
+      "max_length": 600
+    },
+    {
+      "name": "source",
+      "type": "ENUM",
+      "options": [
+        "edit",
+        "told",
+        "lab"
+      ],
+      "default": "edit"
+    },
+    {
+      "name": "locked",
+      "type": "BOOLEAN",
+      "default": false
+    }
+  ]
+}

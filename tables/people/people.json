@@ -1,0 +1,113 @@
+// Everyone who answered them, with the next step. List membership lives in list_members.
+{
+  "name": "people",
+  "primary_key_column": "id",
+  "enable_rls": true,
+  "visibility": "POD",
+  "columns": [
+    {
+      "name": "handle",
+      "type": "TEXT",
+      "max_length": 60,
+      "required": true
+    },
+    {
+      "name": "name",
+      "type": "TEXT",
+      "max_length": 120
+    },
+    {
+      "name": "bio",
+      "type": "TEXT",
+      "max_length": 400
+    },
+    {
+      "name": "followers",
+      "type": "INTEGER"
+    },
+    {
+      "name": "tier",
+      "type": "ENUM",
+      "options": [
+        "hot",
+        "question",
+        "pushback",
+        "agreement",
+        "ack",
+        "ignore"
+      ],
+      "description": "How they last answered them (reply-handling playbook)."
+    },
+    {
+      "name": "said",
+      "type": "TEXT",
+      "max_length": 700
+    },
+    {
+      "name": "said_url",
+      "type": "TEXT",
+      "max_length": 400
+    },
+    {
+      "name": "said_at",
+      "type": "DATETIME"
+    },
+    {
+      "name": "next_step",
+      "type": "TEXT",
+      "max_length": 300
+    },
+    {
+      "name": "status",
+      "type": "ENUM",
+      "options": [
+        "open",
+        "done",
+        "snoozed",
+        "none"
+      ],
+      "description": "open = something for them to do about this person.",
+      "default": "none"
+    },
+    {
+      "name": "follows_you",
+      "type": "BOOLEAN",
+      "default": false
+    },
+    {
+      "name": "you_follow",
+      "type": "BOOLEAN",
+      "default": false
+    },
+    {
+      "name": "follow",
+      "type": "ENUM",
+      "options": [
+        "none",
+        "suggested",
+        "approved",
+        "done",
+        "failed"
+      ],
+      "default": "none"
+    },
+    {
+      "name": "dm_sent_at",
+      "type": "DATETIME"
+    },
+    {
+      "name": "last_touch_at",
+      "type": "DATETIME"
+    },
+    {
+      "name": "skip_until",
+      "type": "DATETIME",
+      "description": "Bot-bait or a no: leave them alone until then."
+    },
+    {
+      "name": "note",
+      "type": "TEXT",
+      "max_length": 400
+    }
+  ]
+}

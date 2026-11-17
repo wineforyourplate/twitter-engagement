@@ -1,0 +1,95 @@
+// Their X Lists, each a custom feed, with Lemma's settings for it: mode, share of the daily cap, voice notes, whether their business may be mentioned.
+{
+  "name": "lists",
+  "primary_key_column": "id",
+  "enable_rls": true,
+  "visibility": "POD",
+  "columns": [
+    {
+      "name": "name",
+      "type": "TEXT",
+      "max_length": 80,
+      "required": true
+    },
+    {
+      "name": "topic",
+      "type": "TEXT",
+      "max_length": 200
+    },
+    {
+      "name": "x_list_id",
+      "type": "TEXT",
+      "max_length": 40,
+      "description": "X's own id for the List, once Kite made or found it."
+    },
+    {
+      "name": "x_list_url",
+      "type": "TEXT",
+      "max_length": 200
+    },
+    {
+      "name": "mode",
+      "type": "ENUM",
+      "options": [
+        "auto",
+        "drafts",
+        "like",
+        "ideas"
+      ],
+      "description": "auto: replies go out on their own when auto-post is on. drafts: every reply waits for a tap. like: Kite only likes fresh posts. ideas: read only, for the daily post idea.",
+      "default": "drafts"
+    },
+    {
+      "name": "cap_share",
+      "type": "INTEGER",
+      "default": 50,
+      "description": "Percent of the daily reply cap this list may use. Also its weight when Kite picks which list to read next."
+    },
+    {
+      "name": "voice",
+      "type": "TEXT",
+      "max_length": 800,
+      "description": "Voice notes for this list only, on top of their general voice."
+    },
+    {
+      "name": "may_mention",
+      "type": "BOOLEAN",
+      "default": false,
+      "description": "May a reply here mention their business (link, tag, offer)? Off for off-topic lists like a sport or social issues."
+    },
+    {
+      "name": "active",
+      "type": "BOOLEAN",
+      "default": true
+    },
+    {
+      "name": "x_status",
+      "type": "ENUM",
+      "options": [
+        "to_create",
+        "ready",
+        "needs_you"
+      ],
+      "description": "to_create: Kite still has to make the List on X (private). ready: it exists. needs_you: X refused; see note.",
+      "default": "to_create"
+    },
+    {
+      "name": "members_on_x",
+      "type": "INTEGER",
+      "default": 0
+    },
+    {
+      "name": "last_read_at",
+      "type": "DATETIME"
+    },
+    {
+      "name": "last_review_at",
+      "type": "DATETIME"
+    },
+    {
+      "name": "note",
+      "type": "TEXT",
+      "max_length": 400
+    }
+  ]
+}

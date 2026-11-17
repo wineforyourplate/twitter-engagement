@@ -1,0 +1,350 @@
+// Each person's clock. The DECISION's first outgoing edge (route -> quiet) is its default branch, so nothing wakes Kite unless x_clock said so.
+{
+ "name": "tick",
+ "description": "Each person's clock, every 15 minutes: a cheap check (x_clock) decides what's due, wakes Kite only for that one job, then marks it done. The quiet branch is listed first, so it is the default.",
+ "start": {
+  "type": "SCHEDULED",
+  "config": {
+   "schedule_type": "CRON"
+  }
+ },
+ "nodes": [
+  {
+   "id": "clock",
+   "type": "FUNCTION",
+   "label": "Anything due?",
+   "config": {
+    "function_name": "x_clock",
+    "input_mapping": {}
+   }
+  },
+  {
+   "id": "route",
+   "type": "DECISION",
+   "label": "What's due",
+   "config": {
+    "rules": [
+     {
+      "condition": "clock.action == 'summary'",
+      "next_node_id": "summary"
+     },
+     {
+      "condition": "clock.action == 'post'",
+      "next_node_id": "post"
+     },
+     {
+      "condition": "clock.action == 'people'",
+      "next_node_id": "people"
+     },
+     {
+      "condition": "clock.action == 'lists'",
+      "next_node_id": "lists"
+     },
+     {
+      "condition": "clock.action == 'check'",
+      "next_node_id": "check"
+     },
+     {
+      "condition": "clock.action == 'search'",
+      "next_node_id": "search"
+     },
+     {
+      "condition": "clock.action == 'list'",
+      "next_node_id": "list"
+     }
+    ]
+   }
+  },
+  {
+   "id": "summary",
+   "type": "AGENT",
+   "label": "Write today's summary",
+   "config": {
+    "agent_name": "kite",
+    "input_mapping": {
+     "task": {
+      "type": "literal",
+      "value": "summary"
+     },
+     "run": {
+      "type": "expression",
+      "value": "clock.run"
+     },
+     "reason": {
+      "type": "expression",
+      "value": "clock.reason"
+     }
+    }
+   }
+  },
+  {
+   "id": "post",
+   "type": "AGENT",
+   "label": "Post the claimed replies, one at a time",
+   "config": {
+    "agent_name": "kite",
+    "input_mapping": {
+     "task": {
+      "type": "literal",
+      "value": "post"
+     },
+     "run": {
+      "type": "expression",
+      "value": "clock.run"
+     },
+     "reason": {
+      "type": "expression",
+      "value": "clock.reason"
+     },
+     "ids": {
+      "type": "expression",
+      "value": "clock.ids"
+     }
+    }
+   }
+  },
+  {
+   "id": "people",
+   "type": "AGENT",
+   "label": "Answer people who answered them",
+   "config": {
+    "agent_name": "kite",
+    "input_mapping": {
+     "task": {
+      "type": "literal",
+      "value": "people"
+     },
+     "run": {
+      "type": "expression",
+      "value": "clock.run"
+     },
+     "reason": {
+      "type": "expression",
+      "value": "clock.reason"
+     }
+    }
+   }
+  },
+  {
+   "id": "lists",
+   "type": "AGENT",
+   "label": "Make or tidy their X Lists",
+   "config": {
+    "agent_name": "kite",
+    "input_mapping": {
+     "task": {
+      "type": "literal",
+      "value": "lists"
+     },
+     "run": {
+      "type": "expression",
+      "value": "clock.run"
+     },
+     "reason": {
+      "type": "expression",
+      "value": "clock.reason"
+     }
+    }
+   }
+  },
+  {
+   "id": "check",
+   "type": "AGENT",
+   "label": "Reach check: read views back",
+   "config": {
+    "agent_name": "kite",
+    "input_mapping": {
+     "task": {
+      "type": "literal",
+      "value": "check"
+     },
+     "run": {
+      "type": "expression",
+      "value": "clock.run"
+     },
+     "reason": {
+      "type": "expression",
+      "value": "clock.reason"
+     }
+    }
+   }
+  },
+  {
+   "id": "search",
+   "type": "AGENT",
+   "label": "Run a search slot",
+   "config": {
+    "agent_name": "kite",
+    "input_mapping": {
+     "task": {
+      "type": "literal",
+      "value": "search"
+     },
+     "run": {
+      "type": "expression",
+      "value": "clock.run"
+     },
+     "reason": {
+      "type": "expression",
+      "value": "clock.reason"
+     },
+     "slot": {
+      "type": "expression",
+      "value": "clock.slot"
+     }
+    }
+   }
+  },
+  {
+   "id": "list",
+   "type": "AGENT",
+   "label": "Read one X List and draft",
+   "config": {
+    "agent_name": "kite",
+    "input_mapping": {
+     "task": {
+      "type": "literal",
+      "value": "list"
+     },
+     "run": {
+      "type": "expression",
+      "value": "clock.run"
+     },
+     "reason": {
+      "type": "expression",
+      "value": "clock.reason"
+     },
+     "list_id": {
+      "type": "expression",
+      "value": "clock.list_id"
+     },
+     "list_name": {
+      "type": "expression",
+      "value": "clock.list_name"
+     },
+     "mode": {
+      "type": "expression",
+      "value": "clock.mode"
+     }
+    }
+   }
+  },
+  {
+   "id": "finish",
+   "type": "FUNCTION",
+   "label": "Mark the run done",
+   "config": {
+    "function_name": "x_clock",
+    "input_mapping": {
+     "finish": {
+      "type": "literal",
+      "value": true
+     },
+     "task": {
+      "type": "expression",
+      "value": "clock.action"
+     }
+    }
+   }
+  },
+  {
+   "id": "quiet",
+   "type": "END",
+   "label": "Nothing due",
+   "config": {}
+  },
+  {
+   "id": "done",
+   "type": "END",
+   "label": "Done",
+   "config": {}
+  }
+ ],
+ "edges": [
+  {
+   "id": "e0",
+   "source": "clock",
+   "target": "route"
+  },
+  {
+   "id": "e1",
+   "source": "route",
+   "target": "quiet"
+  },
+  {
+   "id": "r0",
+   "source": "route",
+   "target": "summary"
+  },
+  {
+   "id": "f0",
+   "source": "summary",
+   "target": "finish"
+  },
+  {
+   "id": "r1",
+   "source": "route",
+   "target": "post"
+  },
+  {
+   "id": "f1",
+   "source": "post",
+   "target": "finish"
+  },
+  {
+   "id": "r2",
+   "source": "route",
+   "target": "people"
+  },
+  {
+   "id": "f2",
+   "source": "people",
+   "target": "finish"
+  },
+  {
+   "id": "r3",
+   "source": "route",
+   "target": "check"
+  },
+  {
+   "id": "f3",
+   "source": "check",
+   "target": "finish"
+  },
+  {
+   "id": "r4",
+   "source": "route",
+   "target": "search"
+  },
+  {
+   "id": "f4",
+   "source": "search",
+   "target": "finish"
+  },
+  {
+   "id": "r5",
+   "source": "route",
+   "target": "list"
+  },
+  {
+   "id": "f5",
+   "source": "list",
+   "target": "finish"
+  },
+  {
+   "id": "e9",
+   "source": "finish",
+   "target": "done"
+  },
+  {
+   "id": "r_lists",
+   "source": "route",
+   "target": "lists"
+  },
+  {
+   "id": "f_lists",
+   "source": "lists",
+   "target": "finish"
+  }
+ ]
+}

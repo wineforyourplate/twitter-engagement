@@ -1,0 +1,35 @@
+// One summary a day, at their summary time.
+{
+  "name": "summaries",
+  "primary_key_column": "id",
+  "enable_rls": true,
+  "visibility": "POD",
+  "columns": [
+    {
+      "name": "day",
+      "type": "TEXT",
+      "max_length": 10,
+      "required": true
+    },
+    {
+      "name": "headline",
+      "type": "TEXT",
+      "max_length": 200
+    },
+    {
+      "name": "body",
+      "type": "TEXT",
+      "max_length": 8000
+    },
+    {
+      "name": "numbers",
+      "type": "JSON",
+      "description": "{replies, views, author_replies, answered, people}"
+    },
+    {
+      "name": "idea",
+      "type": "JSON",
+      "description": "{take, why, backups[]}: one post idea from what Kite read today. They post it themselves."
+    }
+  ]
+}

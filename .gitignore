@@ -1,0 +1,28 @@
+# local secrets and CLI bindings: never commit
+.env
+.env.*
+!.env.example
+.lemma.env
+.lemma.*.env
+.lemma/
+# app build output and dependencies
+apps/*/source/node_modules/
+apps/*/source/dist/
+apps/*/source/dist.zip
+apps/*/dist.zip
+apps/*/source/*.tsbuildinfo
+__pycache__/
+*.py[cod]
+# the seed script's record of what it made (ids of your own rows)
+seed/.seeded.json
+# editor, OS and agent scratch
+.DS_Store
+.claude/
+.idea/
+.vscode/
+*.log
+private/
+scratchpad/
+
+# internal product spec (kept local, not published)
+SPEC.md

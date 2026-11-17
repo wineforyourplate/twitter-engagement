@@ -1,0 +1,58 @@
+// Their X searches. Asks first; run 2-3 times a day.
+{
+  "name": "searches",
+  "primary_key_column": "id",
+  "enable_rls": true,
+  "visibility": "POD",
+  "columns": [
+    {
+      "name": "kind",
+      "type": "ENUM",
+      "options": [
+        "ask",
+        "topic"
+      ],
+      "default": "topic"
+    },
+    {
+      "name": "label",
+      "type": "TEXT",
+      "max_length": 120,
+      "required": true
+    },
+    {
+      "name": "query",
+      "type": "TEXT",
+      "max_length": 700,
+      "required": true
+    },
+    {
+      "name": "active",
+      "type": "BOOLEAN",
+      "default": true
+    },
+    {
+      "name": "max_age_hours",
+      "type": "INTEGER",
+      "description": "Ask searches look back 24 h (48 for 'looking for someone to build this'); topics 3 h."
+    },
+    {
+      "name": "last_run_at",
+      "type": "DATETIME"
+    },
+    {
+      "name": "found_last",
+      "type": "INTEGER"
+    },
+    {
+      "name": "found_total",
+      "type": "INTEGER",
+      "default": 0
+    },
+    {
+      "name": "replied_total",
+      "type": "INTEGER",
+      "default": 0
+    }
+  ]
+}

@@ -1,0 +1,181 @@
+// Drafts, posted replies, answers and DMs, with what each drew.
+{
+  "name": "replies",
+  "primary_key_column": "id",
+  "enable_rls": true,
+  "visibility": "POD",
+  "columns": [
+    {
+      "name": "kind",
+      "type": "ENUM",
+      "options": [
+        "reply",
+        "answer",
+        "dm"
+      ],
+      "default": "reply"
+    },
+    {
+      "name": "lane",
+      "type": "ENUM",
+      "options": [
+        "list",
+        "ask",
+        "topic",
+        "warm",
+        "answer"
+      ],
+      "default": "list"
+    },
+    {
+      "name": "list_id",
+      "type": "TEXT",
+      "max_length": 60,
+      "description": "For lane list: the lists row it came from (its mode, share and mention rule apply)."
+    },
+    {
+      "name": "status",
+      "type": "ENUM",
+      "options": [
+        "waiting",
+        "approved",
+        "posting",
+        "posted",
+        "skipped",
+        "expired",
+        "failed"
+      ],
+      "description": "waiting (for them) -> approved (by them, or by auto-post) -> posting (claimed by x_clock) -> posted; or skipped, expired (post got too old), failed.",
+      "default": "waiting"
+    },
+    {
+      "name": "post_url",
+      "type": "TEXT",
+      "max_length": 400,
+      "required": true
+    },
+    {
+      "name": "parent_url",
+      "type": "TEXT",
+      "max_length": 400,
+      "description": "For an answer: their reply you're answering."
+    },
+    {
+      "name": "author_handle",
+      "type": "TEXT",
+      "max_length": 60
+    },
+    {
+      "name": "author_name",
+      "type": "TEXT",
+      "max_length": 120
+    },
+    {
+      "name": "author_followers",
+      "type": "INTEGER"
+    },
+    {
+      "name": "author_bio",
+      "type": "TEXT",
+      "max_length": 400
+    },
+    {
+      "name": "post_text",
+      "type": "TEXT",
+      "max_length": 1500
+    },
+    {
+      "name": "post_at",
+      "type": "DATETIME"
+    },
+    {
+      "name": "post_stats",
+      "type": "JSON",
+      "description": "{likes, replies, views} when read"
+    },
+    {
+      "name": "why",
+      "type": "TEXT",
+      "max_length": 400
+    },
+    {
+      "name": "point",
+      "type": "TEXT",
+      "max_length": 120,
+      "description": "Self-check 1: what this reply adds, in under 10 words."
+    },
+    {
+      "name": "draft",
+      "type": "TEXT",
+      "max_length": 1500
+    },
+    {
+      "name": "text",
+      "type": "TEXT",
+      "max_length": 1500,
+      "description": "Their edit. Posted instead of draft when set."
+    },
+    {
+      "name": "mention",
+      "type": "ENUM",
+      "options": [
+        "none",
+        "tag",
+        "link",
+        "offer"
+      ],
+      "default": "none"
+    },
+    {
+      "name": "shape",
+      "type": "TEXT",
+      "max_length": 40
+    },
+    {
+      "name": "fresh_until",
+      "type": "DATETIME",
+      "description": "After this the post is too old to reply to; x_clock expires it."
+    },
+    {
+      "name": "approved_by",
+      "type": "ENUM",
+      "options": [
+        "you",
+        "auto"
+      ]
+    },
+    {
+      "name": "approved_at",
+      "type": "DATETIME"
+    },
+    {
+      "name": "claimed_by",
+      "type": "TEXT",
+      "max_length": 80
+    },
+    {
+      "name": "posted_at",
+      "type": "DATETIME"
+    },
+    {
+      "name": "reply_url",
+      "type": "TEXT",
+      "max_length": 400
+    },
+    {
+      "name": "readout",
+      "type": "JSON",
+      "description": "{views, likes, replies, author_replied, checked_at}"
+    },
+    {
+      "name": "person_id",
+      "type": "TEXT",
+      "max_length": 60
+    },
+    {
+      "name": "error",
+      "type": "TEXT",
+      "max_length": 500
+    }
+  ]
+}

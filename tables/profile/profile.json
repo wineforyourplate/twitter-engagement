@@ -1,0 +1,161 @@
+// One row per person: their business, limits, the auto-post switch, state and clock.
+{
+  "name": "profile",
+  "primary_key_column": "id",
+  "enable_rls": true,
+  "visibility": "POD",
+  "columns": [
+    {
+      "name": "onboarding_step",
+      "type": "ENUM",
+      "options": [
+        "hello",
+        "business",
+        "list",
+        "connect",
+        "deal",
+        "done"
+      ],
+      "default": "hello"
+    },
+    {
+      "name": "name",
+      "type": "TEXT",
+      "max_length": 120
+    },
+    {
+      "name": "x_handle",
+      "type": "TEXT",
+      "max_length": 60
+    },
+    {
+      "name": "x_followers",
+      "type": "INTEGER"
+    },
+    {
+      "name": "x_bio",
+      "type": "TEXT",
+      "max_length": 400
+    },
+    {
+      "name": "x_joined_at",
+      "type": "DATETIME",
+      "description": "When their X account was made, if Kite could read it. A young account ramps from its own age."
+    },
+    {
+      "name": "timezone",
+      "type": "TEXT",
+      "max_length": 60,
+      "default": "UTC"
+    },
+    {
+      "name": "business",
+      "type": "JSON",
+      "description": "{what, who, offer, link, tag, topics[]}: what they do, who they want to reach, the one thing to try, their tracked link, their company handle, their topics."
+    },
+    {
+      "name": "limits",
+      "type": "JSON",
+      "description": "{daily_cap 10-38 (default 30), gap_min 180, gap_max 240, hour_cap 5, break_start '13:00', break_minutes 120, day_start '08:00', day_end '23:00'}"
+    },
+    {
+      "name": "auto_post",
+      "type": "BOOLEAN",
+      "default": false,
+      "description": "On: list replies and answers that pass the self-check go out without a tap. Search finds, DMs and follows always wait."
+    },
+    {
+      "name": "week1_auto",
+      "type": "BOOLEAN",
+      "default": false,
+      "description": "Chosen in onboarding: may auto-post be switched on in the account's first week? The week-1 cap of 10 applies either way."
+    },
+    {
+      "name": "state",
+      "type": "ENUM",
+      "options": [
+        "running",
+        "paused",
+        "stopped"
+      ],
+      "description": "running; paused (by them: Kite reads, nothing goes out); stopped (by Kite at a warning or a failed reach check: nothing goes out until they resume).",
+      "default": "running"
+    },
+    {
+      "name": "stop_reason",
+      "type": "TEXT",
+      "max_length": 600
+    },
+    {
+      "name": "stopped_at",
+      "type": "DATETIME"
+    },
+    {
+      "name": "resumed_at",
+      "type": "DATETIME"
+    },
+    {
+      "name": "started_at",
+      "type": "DATETIME",
+      "description": "When they finished onboarding. The ramp counts from here."
+    },
+    {
+      "name": "browser_status",
+      "type": "ENUM",
+      "options": [
+        "unknown",
+        "signed_in",
+        "signed_out",
+        "checkpoint"
+      ],
+      "default": "unknown"
+    },
+    {
+      "name": "browser_checked_at",
+      "type": "DATETIME"
+    },
+    {
+      "name": "browser_lock",
+      "type": "JSON",
+      "description": "{owner, until}: one run at a time in their browser (function browser_lock)."
+    },
+    {
+      "name": "summary_time",
+      "type": "TEXT",
+      "max_length": 5,
+      "default": "09:00"
+    },
+    {
+      "name": "clock_schedule",
+      "type": "TEXT",
+      "max_length": 80,
+      "description": "Their own clock schedule's id, made by the app."
+    },
+    {
+      "name": "clock",
+      "type": "JSON",
+      "description": "Kept by function x_clock: {running:{task,since,run}, last_list_at, last_search_slot, last_people_at, last_check_at, last_summary_on, next_list_gap}"
+    },
+    {
+      "name": "voice",
+      "type": "JSON",
+      "description": "Short writing rules, newest last. Their locked lessons win over these."
+    },
+    {
+      "name": "learning_status",
+      "type": "ENUM",
+      "options": [
+        "idle",
+        "running",
+        "done"
+      ],
+      "default": "idle"
+    },
+    {
+      "name": "last_note",
+      "type": "TEXT",
+      "max_length": 600,
+      "description": "Kite's latest one-line status for the Today header."
+    }
+  ]
+}

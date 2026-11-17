@@ -1,0 +1,98 @@
+// Every on-topic post Kite read. One read, three uses: replies, people, and the daily post idea.
+{
+  "name": "signals",
+  "primary_key_column": "id",
+  "enable_rls": true,
+  "visibility": "POD",
+  "columns": [
+    {
+      "name": "seen_at",
+      "type": "DATETIME"
+    },
+    {
+      "name": "post_url",
+      "type": "TEXT",
+      "max_length": 400,
+      "required": true
+    },
+    {
+      "name": "author_handle",
+      "type": "TEXT",
+      "max_length": 60
+    },
+    {
+      "name": "author_name",
+      "type": "TEXT",
+      "max_length": 120
+    },
+    {
+      "name": "followers",
+      "type": "INTEGER"
+    },
+    {
+      "name": "age_min",
+      "type": "INTEGER"
+    },
+    {
+      "name": "likes",
+      "type": "INTEGER"
+    },
+    {
+      "name": "replies",
+      "type": "INTEGER"
+    },
+    {
+      "name": "views",
+      "type": "INTEGER"
+    },
+    {
+      "name": "text",
+      "type": "TEXT",
+      "max_length": 700
+    },
+    {
+      "name": "source",
+      "type": "TEXT",
+      "max_length": 120,
+      "description": "'list' or the search label"
+    },
+    {
+      "name": "topic",
+      "type": "TEXT",
+      "max_length": 80
+    },
+    {
+      "name": "kind",
+      "type": "ENUM",
+      "options": [
+        "ask",
+        "take",
+        "analysis",
+        "news",
+        "howto",
+        "promo",
+        "bait",
+        "other"
+      ],
+      "default": "other"
+    },
+    {
+      "name": "decision",
+      "type": "TEXT",
+      "max_length": 200,
+      "description": "'picked' or why not"
+    },
+    {
+      "name": "person",
+      "type": "TEXT",
+      "max_length": 200,
+      "description": "follow / watch / suggest for list / none, with a reason"
+    },
+    {
+      "name": "idea",
+      "type": "TEXT",
+      "max_length": 300,
+      "description": "An angle for a post of their own, if the post seeded one"
+    }
+  ]
+}

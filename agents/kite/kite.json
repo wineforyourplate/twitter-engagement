@@ -1,0 +1,135 @@
+{
+  "name": "kite",
+  "description": "Kite, your X engagement teammate: reads your list and searches in your own signed-in browser, drafts replies in your voice, answers people who answer you, posts at a human pace within limits checked by code, and sends one summary a day.",
+  "visibility": "POD",
+  "instruction": {
+    "$file": "instruction.md"
+  },
+  "toolsets": [
+    "WORKSPACE_CLI",
+    "BROWSER",
+    "WEB_SEARCH"
+  ],
+  "permissions": {
+    "grants": [
+      {
+        "resource_type": "datastore_table",
+        "resource_name": "profile",
+        "permission_ids": [
+          "datastore.table.read",
+          "datastore.record.read",
+          "datastore.record.write"
+        ]
+      },
+      {
+        "resource_type": "datastore_table",
+        "resource_name": "searches",
+        "permission_ids": [
+          "datastore.table.read",
+          "datastore.record.read",
+          "datastore.record.write"
+        ]
+      },
+      {
+        "resource_type": "datastore_table",
+        "resource_name": "people",
+        "permission_ids": [
+          "datastore.table.read",
+          "datastore.record.read",
+          "datastore.record.write"
+        ]
+      },
+      {
+        "resource_type": "datastore_table",
+        "resource_name": "signals",
+        "permission_ids": [
+          "datastore.table.read",
+          "datastore.record.read",
+          "datastore.record.write"
+        ]
+      },
+      {
+        "resource_type": "datastore_table",
+        "resource_name": "replies",
+        "permission_ids": [
+          "datastore.table.read",
+          "datastore.record.read",
+          "datastore.record.write"
+        ]
+      },
+      {
+        "resource_type": "datastore_table",
+        "resource_name": "activity",
+        "permission_ids": [
+          "datastore.table.read",
+          "datastore.record.read",
+          "datastore.record.write"
+        ]
+      },
+      {
+        "resource_type": "datastore_table",
+        "resource_name": "summaries",
+        "permission_ids": [
+          "datastore.table.read",
+          "datastore.record.read",
+          "datastore.record.write"
+        ]
+      },
+      {
+        "resource_type": "datastore_table",
+        "resource_name": "lessons",
+        "permission_ids": [
+          "datastore.table.read",
+          "datastore.record.read",
+          "datastore.record.write"
+        ]
+      },
+      {
+        "resource_type": "function",
+        "resource_name": "allowance",
+        "permission_ids": [
+          "function.execute"
+        ]
+      },
+      {
+        "resource_type": "function",
+        "resource_name": "browser_lock",
+        "permission_ids": [
+          "function.execute"
+        ]
+      },
+      {
+        "resource_type": "function",
+        "resource_name": "reach",
+        "permission_ids": [
+          "function.execute"
+        ]
+      },
+      {
+        "resource_type": "function",
+        "resource_name": "setup_me",
+        "permission_ids": [
+          "function.execute"
+        ]
+      },
+      {
+        "resource_type": "datastore_table",
+        "resource_name": "lists",
+        "permission_ids": [
+          "datastore.table.read",
+          "datastore.record.read",
+          "datastore.record.write"
+        ]
+      },
+      {
+        "resource_type": "datastore_table",
+        "resource_name": "list_members",
+        "permission_ids": [
+          "datastore.table.read",
+          "datastore.record.read",
+          "datastore.record.write"
+        ]
+      }
+    ]
+  }
+}

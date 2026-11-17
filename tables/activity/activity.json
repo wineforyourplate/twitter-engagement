@@ -1,0 +1,59 @@
+// Every action on their X account, written for them to read.
+{
+  "name": "activity",
+  "primary_key_column": "id",
+  "enable_rls": true,
+  "visibility": "POD",
+  "columns": [
+    {
+      "name": "at",
+      "type": "DATETIME"
+    },
+    {
+      "name": "action",
+      "type": "ENUM",
+      "options": [
+        "read",
+        "reply",
+        "answer",
+        "like",
+        "follow",
+        "dm",
+        "check",
+        "stop",
+        "skip",
+        "summary",
+        "learn",
+        "note"
+      ],
+      "default": "note"
+    },
+    {
+      "name": "detail",
+      "type": "TEXT",
+      "max_length": 600
+    },
+    {
+      "name": "result",
+      "type": "ENUM",
+      "options": [
+        "ok",
+        "skipped",
+        "postponed",
+        "warning",
+        "failed"
+      ],
+      "default": "ok"
+    },
+    {
+      "name": "page_loads",
+      "type": "INTEGER",
+      "default": 0
+    },
+    {
+      "name": "run",
+      "type": "TEXT",
+      "max_length": 80
+    }
+  ]
+}

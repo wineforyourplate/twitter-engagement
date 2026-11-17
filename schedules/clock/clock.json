@@ -1,0 +1,14 @@
+{
+  "name": "clock",
+  "visibility": "POD",
+  "is_active": false,
+  "schedule_type": "TIME",
+  "workflow_name": "tick",
+  "agent_name": null,
+  "instruction": null,
+  "config": {
+    "cron": "*/15 * * * *",
+    "timezone": "UTC",
+    "max_concurrent_runs": 1
+  }
+}
