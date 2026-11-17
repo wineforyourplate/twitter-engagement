@@ -1,0 +1,9 @@
+# Lemma builds this app with pnpm on import. These packages need their install
+# scripts (esbuild ships its binary that way); newer pnpm blocks them unless allowed.
+# pnpm 10 reads onlyBuiltDependencies; pnpm 11 reads allowBuilds.
+onlyBuiltDependencies:
+  - esbuild
+  - browser-tabs-lock
+allowBuilds:
+  esbuild: true
+  browser-tabs-lock: true
